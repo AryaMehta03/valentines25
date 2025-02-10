@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Valentines Day</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -31,33 +31,64 @@
 <body class="gradient-background">
   <div class="flex items-center justify-center h-screen">
     <div class="flex flex-col items-center p-4">
-      <img id="imageDisplay" src="./images/image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px]" style="object-fit: cover;" />
-      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">Will you be my Valentine?</h2>
+      <!-- Image Display -->
+      <img
+        id="imageDisplay"
+        src="./images/image1.gif"
+        alt="Cute kitten with flowers"
+        class="rounded-md h-[300px]"
+        style="object-fit: cover;"
+      />
+
+      <!-- Valentine Question -->
+      <h2
+        id="valentineQuestion"
+        class="text-4xl font-bold italic text-[#bd1e59] my-4"
+      >
+        Will you be my Valentine?
+      </h2>
+
+      <!-- Buttons Row -->
       <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
-        <button id="yesButton"
-          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition">
+        <button
+          id="yesButton"
+          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition"
+        >
           Yes
         </button>
-        <button id="noButton"
-          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[75px] w-auto px-4 py-2 bg-red-500 text-white">
+        <button
+          id="noButton"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-red-700 h-12 min-w-[75px] w-auto px-4 py-2 bg-red-500 text-white"
+        >
           No
         </button>
       </div>
+
+      <!-- Hidden message (will display after clicking "Yes") -->
+      <p
+        id="loremMessage"
+        class="hidden text-center text-gray-700 mt-6 mx-4 max-w-xl"
+      >
+        <!-- 50-word placeholder (will be revealed on 'Yes' click). -->
+      </p>
     </div>
   </div>
 
   <script type="module">
     import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
     const imageDisplay = document.getElementById('imageDisplay');
     const valentineQuestion = document.getElementById('valentineQuestion');
     const responseButtons = document.getElementById('responseButtons');
-  
+    const loremMessage = document.getElementById('loremMessage');
+
     let noClickCount = 0;
     let buttonHeight = 48; // Starting height in pixels
-    let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
+    let buttonWidth = 80;  // Starting width in pixels
+    let fontSize = 20;     // Starting font size in pixels
+
     const imagePaths = [
       "./images/image1.gif",
       "./images/image2.gif",
@@ -67,29 +98,51 @@
       "./images/image6.gif",
       "./images/image7.gif"
     ];
-  
+
+    // "No" button behavior
     noButton.addEventListener('click', function() {
       if (noClickCount < 5) {
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
-        buttonHeight += 35; // Increase height by 5px on each click
+        buttonHeight += 35;
         buttonWidth += 35;
-        fontSize += 25; // Increase font size by 1px on each click
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
+        fontSize += 25;
+        yesButton.style.height = `${buttonHeight}px`;
         yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
+        yesButton.style.fontSize = `${fontSize}px`;
+
         if (noClickCount < 6) {
-          noButton.textContent = ["No", "Are you sure?", "hon pwease", "Don't do this to me :(", "hontyyyyy", "I'm gonna cry..."][noClickCount];
+          noButton.textContent = [
+            "No",
+            "Not yes 🥲",
+            "hon 🥲",
+            "I think you clicked No by mistake 🥲",
+            "babe? 🥲",
+            "Nope 🫣"
+          ][noClickCount];
         }
       }
     });
-  
+
+    // "Yes" button behavior
     yesButton.addEventListener('click', () => {
-      imageDisplay.src = './images/image7.gif'; // Change to image7.gif
-      valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
-      responseButtons.style.display = 'none'; // Hide both buttons
-      confetti(); // Trigger confetti animation
+      imageDisplay.src = './images/image7.gif';  // Change to final image
+      valentineQuestion.textContent = "What took you so long 🥲"; // Change the question text
+      responseButtons.style.display = 'none';     // Hide both buttons
+
+      // Show confetti animation
+      confetti();
+
+      // Reveal the 50-word lorem ipsum message
+      loremMessage.textContent = 
+        "Thank you for being a part of my life anahita, I am blessed to have a partner like you. " +
+        "Everyday, I thank god that i have you in my life because you make me feel so special and loved. " +
+        "We have been through countless ups and downs but our love for each other has just grown. " +
+        "You are extremely smart, caring, wise, affectionate, and i truly look upto you in every aspect of life. " +
+        "Thank you for being patient with me, i make many misakes but i swear i love you a lot and will improve "+
+        "everyday for you. ";
+      loremMessage.classList.remove('hidden');
     });
-  </script>  
+  </script>
 </body>
 </html>
